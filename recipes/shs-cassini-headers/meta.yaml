@@ -1,0 +1,38 @@
+{% set name = "shs-cassini-headers" %}
+{% set version = "1.1.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_url: https://github.com/HewlettPackard/shs-cassini-headers.git
+  git_rev: release/shs-12.0.1  # Tagged release, aligns with spec version 1.1.1
+
+build:
+  number: 0
+  noarch: generic  # Headers only, no compilation
+
+requirements:
+  build:
+    - git
+
+test:
+  commands:
+    - test -f $PREFIX/include/sbl/sbl_pml.h 
+    - test -f $PREFIX/share/cassini-headers/csr_defs.json
+
+about:
+  home: https://github.com/HewlettPackard/shs-cassini-headers
+  license: GPL-2.0-or-later OR BSD-3-Clause  # Dual license from cray-cassini-headers-public.spec
+  license_file: cray-cassini-headers-public.spec
+  summary: 'Headers for Cassini (Slingshot) interconnect'
+  description: |
+    Provides headers and shared data (e.g., JSON definitions) for Cassini-based systems.
+    Dual-licensed under GPL-2.0-or-later or BSD-3-Clause as per cray-cassini-headers-public.spec.
+    Awaiting upstream confirmation of license via issue.
+  dev_url: https://github.com/HewlettPackard/shs-cassini-headers
+
+extra:
+  recipe-maintainers:
+    - j34ni
