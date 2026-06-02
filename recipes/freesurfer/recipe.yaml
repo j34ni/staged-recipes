@@ -1,0 +1,67 @@
+schema_version: 1
+
+package:
+  name: freesurfer
+  version: 8.2.0
+
+source:
+  url: https://github.com/freesurfer/freesurfer/archive/refs/tags/v8.2.0.tar.gz
+  sha256: bb1699f7655ebf0f3790db6a78af9532ea7c832c97fe5f71bfd9f0e9526d7e78
+
+build:
+  number: 0
+  skip:
+    - not linux
+
+requirements:
+  build:
+    - ${{ compiler('c') }}
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('fortran') }}
+    - cmake
+    - make
+    - git
+    - git-annex
+    - pkg-config
+  host:
+    - python =3.11
+    - libblas
+    - liblapack
+    - openblas
+    - zlib
+    - libitk-devel =5.4.5
+    - vtk
+    - qt-main
+    - freeglut
+    - xorg-libxmu
+    - xorg-libxi
+    - xorg-libxt
+    - xorg-libx11
+    - pybind11
+  run:
+    - python >=3.11
+    - numpy
+    - scipy
+    - nibabel
+    - matplotlib
+
+tests:
+  - script:
+    - mri_convert --version
+    - mri_info --help
+
+about:
+  license: LicenseRef-FreeSurfer
+  license_file: LICENSE.txt
+  summary: FreeSurfer neuroimaging analysis suite
+  description: |
+    FreeSurfer is an open source software suite for processing and analyzing
+    human brain MRI images. Note: running FreeSurfer requires a free license
+    file obtained by registering at https://surfer.nmr.mgh.harvard.edu/registration.html
+  homepage: https://surfer.nmr.mgh.harvard.edu/
+  repository: https://github.com/freesurfer/freesurfer
+  documentation: https://surfer.nmr.mgh.harvard.edu/fswiki
+
+extra:
+  recipe-maintainers:
+    - j34ni
